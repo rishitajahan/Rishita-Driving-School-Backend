@@ -1,0 +1,30 @@
+[
+  {
+    "packageName": "1 LESSON PACKAGE",
+    "packagePrice": 200,
+    "packageFeatures": ["1 Lesson", "5 Hour Certification", "Car For Road Test", "Rush Road Test Appointment"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/14k2a1aWt2WB7pm3cc"
+  },
+  {
+    "packageName": "2 LESSON PACKAGE",
+    "packagePrice": 240,
+    "packageFeatures": ["2 Lessons", "5 Hour Certificate", "Car For Road Test", "Rush Road Test Appointment"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/9AQ9CtaWt7cRdNKfYZ"
+  },
+  {
+    "packageName": "3 LESSON PACKAGE",
+    "packagePrice": 300,
+    "packageFeatures": ["3 Lessons", "5 Hour Certificate", "Car For Road Test", "Rush Road Test Appointment"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/3cs2a12pX2WB6liaEG"
+  },
+  {
+    "packageName": "4 LESSON PACKAGE",
+    "packagePrice": 320,
+    "packageFeatures": ["4 Lessons", "5 Hour Certificate", "Car For Road Test", "Rush Road Test Appointment"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/00g7ul4y57cReRO003"
+  }
+]

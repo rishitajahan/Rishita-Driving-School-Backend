@@ -1,0 +1,30 @@
+[
+  {
+    "packageName": "Regular Road Test Appointment",
+    "packagePrice": 25,
+    "packageFeatures": ["Appointment"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/6oE01TaWtgNr39628g"
+  },
+  {
+    "packageName": "Car For Road Test",
+    "packagePrice": 100,
+    "packageFeatures": ["Minimum"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/6oEdSJ1lT2WB4da5kt"
+  },
+  {
+    "packageName": "Rush Road Test Appointment",
+    "packagePrice": 50,
+    "packageFeatures": ["Not Guaranteed"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/4gwbKB6GdfJn4dabIS"
+  },
+  {
+    "packageName": "Individual Driving Lesson",
+    "packagePrice": 45,
+    "packageFeatures": ["(45 minutes)"],
+    "packageImage": "",
+    "paymentLink": "https://buy.stripe.com/14kcOF3u1eFj6li7sD"
+  }
+]
