@@ -24,7 +24,8 @@ const client = new MongoClient(uri, {
 async function run() {
 	try {
 		// Connect the client to the server	(optional starting in v4.7)
-		await client.connect();
+		// await client.connect();
+
 		const basicPackagesCollection = client.db("Rishita-Driving-School").collection("Basic Packages");
 		const individualPackagesCollection = client.db("Rishita-Driving-School").collection("Individual Packages");
 		const standardPackagesCollection = client.db("Rishita-Driving-School").collection("Standard Packages");
