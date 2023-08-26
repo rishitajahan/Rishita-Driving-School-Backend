@@ -5,6 +5,18 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const bodyParser = require("body-parser");
 
+// !Stripe
+const stripe = require("stripe")(
+	"sk_test_51M4aI0AhSJPfh32jc8mSJR3bbGTNOsgxi8AS6HoCvGSSpccruWswE63ThNFIA69DQzMYFj3JAREbPxGxR8l7kB3z00WfU67JEU"
+);
+
+const calculateOrderAmount = items => {
+	// Replace this constant with a calculation of the order's amount
+	// Calculate the order total on the server to prevent
+	// people from directly manipulating the amount on the client
+	return items * 100;
+};
+
 require("dotenv").config();
 
 // middleware
@@ -128,6 +140,26 @@ async function run() {
 				console.error("Error:", error);
 				res.status(500).json({ error: "An error occurred" });
 			}
+		});
+
+		// !Stripe
+		app.post("/create-payment-intent", async (req, res) => {
+			const { packageName, packagePrice } = req.body;
+			console.log(packageName, packagePrice);
+
+			// Create a PaymentIntent with the order amount and currency
+			const paymentIntent = await stripe.paymentIntents.create({
+				amount: calculateOrderAmount(packagePrice),
+				currency: "usd",
+				// In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+				automatic_payment_methods: {
+					enabled: true,
+				},
+			});
+
+			res.send({
+				clientSecret: paymentIntent.client_secret,
+			});
 		});
 
 		// Send a ping to confirm a successful connection
