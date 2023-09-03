@@ -87,6 +87,7 @@ async function run() {
 			const stateData = await stateDB
 				.collection(stateName)
 				.find({ packageCategory: { $regex: "basic", $options: "i" } })
+				.sort({ packagePrice: 1 })
 				.toArray();
 			res.send(stateData);
 		});
@@ -95,6 +96,7 @@ async function run() {
 			const stateData = await stateDB
 				.collection(stateName)
 				.find({ packageCategory: { $regex: "standard", $options: "i" } })
+				.sort({ packagePrice: 1 })
 				.toArray();
 			res.send(stateData);
 		});
@@ -103,6 +105,7 @@ async function run() {
 			const stateData = await stateDB
 				.collection(stateName)
 				.find({ packageCategory: { $regex: "individual", $options: "i" } })
+				.sort({ packagePrice: 1 })
 				.toArray();
 			res.send(stateData);
 		});
