@@ -5,8 +5,6 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const bodyParser = require("body-parser");
 
-
-
 // !Stripe
 const stripe = require("stripe")(
 	"sk_test_51M4aI0AhSJPfh32jc8mSJR3bbGTNOsgxi8AS6HoCvGSSpccruWswE63ThNFIA69DQzMYFj3JAREbPxGxR8l7kB3z00WfU67JEU"
