@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const bodyParser = require("body-parser");
 
 // !Stripe
@@ -142,6 +142,66 @@ async function run() {
 			} catch (error) {
 				console.error("Error:", error);
 				res.status(500).json({ error: "An error occurred" });
+			}
+		});
+
+		app.post("/update-package", async (req, res) => {
+			const updatedPackage = req.body;
+			console.log(updatedPackage);
+
+			if (updatedPackage.packageInfo == "ROOT") {
+				if (updatedPackage.updatedPackageCategory.toLowerCase() == "basic") {
+					const result = await basicPackagesCollection.updateOne(
+						{ _id: new ObjectId(updatedPackage.packageId) },
+						{
+							$set: {
+								packageName: updatedPackage.updatedPackageName,
+								packagePrice: updatedPackage.updatedPackagePrice,
+								packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
+								packageImage: updatedPackage.updatedPackageImage,
+							},
+						}
+					);
+				}
+				if (updatedPackage.updatedPackageCategory.toLowerCase() == "standard") {
+					const result = await standardPackagesCollection.updateOne(
+						{ _id: new ObjectId(updatedPackage.packageId) },
+						{
+							$set: {
+								packageName: updatedPackage.updatedPackageName,
+								packagePrice: updatedPackage.updatedPackagePrice,
+								packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
+								packageImage: updatedPackage.updatedPackageImage,
+							},
+						}
+					);
+				}
+				if (updatedPackage.updatedPackageCategory.toLowerCase() == "individual") {
+					const result = await individualPackagesCollection.updateOne(
+						{ _id: new ObjectId(updatedPackage.packageId) },
+						{
+							$set: {
+								packageName: updatedPackage.updatedPackageName,
+								packagePrice: updatedPackage.updatedPackagePrice,
+								packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
+								packageImage: updatedPackage.updatedPackageImage,
+							},
+						}
+					);
+				}
+			} else {
+				const result = await stateDB.collection(updatedPackage.stateName).updateOne(
+					{ _id: new ObjectId(updatedPackage.packageId) },
+					{
+						$set: {
+							packageName: updatedPackage.updatedPackageName,
+							packagePrice: updatedPackage.updatedPackagePrice,
+							packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
+							packageImage: updatedPackage.updatedPackageImage,
+							packageCategory: updatedPackage.updatedPackageCategory,
+						},
+					}
+				);
 			}
 		});
 
