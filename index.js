@@ -155,10 +155,10 @@ async function run() {
 						{ _id: new ObjectId(updatedPackage.packageId) },
 						{
 							$set: {
-								packageName: updatedPackage.updatedPackageName,
-								packagePrice: updatedPackage.updatedPackagePrice,
-								packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
-								packageImage: updatedPackage.updatedPackageImage,
+								packageName: updatedPackage?.updatedPackageName,
+								packagePrice: parseFloat(updatedPackage?.updatedPackagePrice),
+								packageFeatures: updatedPackage?.updatedPackageFeatures.split(","),
+								packageImage: updatedPackage?.updatedPackageImage,
 							},
 						}
 					);
@@ -169,7 +169,7 @@ async function run() {
 						{
 							$set: {
 								packageName: updatedPackage.updatedPackageName,
-								packagePrice: updatedPackage.updatedPackagePrice,
+								packagePrice: parseFloat(updatedPackage.updatedPackagePrice),
 								packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
 								packageImage: updatedPackage.updatedPackageImage,
 							},
@@ -182,7 +182,7 @@ async function run() {
 						{
 							$set: {
 								packageName: updatedPackage.updatedPackageName,
-								packagePrice: updatedPackage.updatedPackagePrice,
+								packagePrice: parseFloat(updatedPackage.updatedPackagePrice),
 								packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
 								packageImage: updatedPackage.updatedPackageImage,
 							},
@@ -195,13 +195,64 @@ async function run() {
 					{
 						$set: {
 							packageName: updatedPackage.updatedPackageName,
-							packagePrice: updatedPackage.updatedPackagePrice,
+							packagePrice: parseFloat(updatedPackage.updatedPackagePrice),
 							packageFeatures: updatedPackage.updatedPackageFeatures.split(","),
 							packageImage: updatedPackage.updatedPackageImage,
 							packageCategory: updatedPackage.updatedPackageCategory,
 						},
 					}
 				);
+			}
+		});
+
+		app.post("/delete-a-package", async (req, res) => {
+			const packageDetails = req.body;
+			if (packageDetails?.packageInfo?.toLowerCase() == "root") {
+				if (packageDetails?.packageCategory?.toLowerCase() == "basic") {
+					const result = await basicPackagesCollection?.deleteOne({ _id: new ObjectId(packageDetails.id) });
+					res.send("Deleted Successfully");
+				}
+				if (packageDetails?.packageCategory?.toLowerCase() == "standard") {
+					const result = await basicPackagesCollection?.deleteOne({ _id: new ObjectId(packageDetails.id) });
+					res.send("Deleted Successfully");
+				}
+				if (packageDetails?.packageCategory?.toLowerCase() == "individual") {
+					const result = await basicPackagesCollection?.deleteOne({ _id: new ObjectId(packageDetails.id) });
+					res.send("Deleted Successfully");
+				}
+			} else {
+				const result = await stateDB?.collection(packageDetails?.stateName)?.deleteOne({ _id: new ObjectId(packageDetails.id) });
+				res.send("Deleted Successfully");
+			}
+		});
+
+		app.post("/add-a-package", async (req, res) => {
+			const packageDetails = req.body;
+
+			const modifiedPackage = {
+				packageName: packageDetails?.updatedPackageName,
+				packagePrice: parseFloat(packageDetails?.updatedPackagePrice),
+				packageFeatures: packageDetails?.updatedPackageFeatures.split(","),
+				packageImage: packageDetails?.updatedPackageImage,
+			};
+
+			if (packageDetails?.packageInfo?.toLowerCase() == "root") {
+				if (packageDetails?.updatedPackageCategory?.toLowerCase() == "basic") {
+					const result = await basicPackagesCollection?.insertOne(modifiedPackage);
+					res.send("Added Successfully");
+				}
+				if (packageDetails?.updatedPackageCategory?.toLowerCase() == "standard") {
+					const result = await standardPackagesCollection?.insertOne(modifiedPackage);
+					res.send("Added Successfully");
+				}
+				if (packageDetails?.updatedPackageCategory?.toLowerCase() == "individual") {
+					const result = await individualPackagesCollection?.insertOne(modifiedPackage);
+					res.send("Added Successfully");
+				}
+			} else {
+				modifiedPackage["packageCategory"] = packageDetails?.updatedPackageCategory;
+				const result = await stateDB?.collection(packageDetails?.updatedStateName)?.insertOne(modifiedPackage);
+				res.send("Added Successfully");
 			}
 		});
 
