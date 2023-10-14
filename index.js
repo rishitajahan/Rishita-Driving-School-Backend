@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 
 // !Stripe
 const stripe = require("stripe")(
-	"sk_test_51M4aI0AhSJPfh32jc8mSJR3bbGTNOsgxi8AS6HoCvGSSpccruWswE63ThNFIA69DQzMYFj3JAREbPxGxR8l7kB3z00WfU67JEU"
+	"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"
 );
 
 const calculateOrderAmount = items => {
